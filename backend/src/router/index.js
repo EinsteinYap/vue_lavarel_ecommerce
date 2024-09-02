@@ -5,6 +5,7 @@ import Dashboard from "../views/Dashboard.vue";
 import Products from "../views/Products.vue";
 import RequestPassword from "../views/RequestPassword.vue";
 import ResetPassword from "../views/ResetPassword.vue";
+import NotFound from "../views/NotFound.vue";
 import store from "../store";
 
 const routes = [
@@ -51,6 +52,11 @@ const routes = [
     meta: {
       requiresGuest: true
     }
+  },
+  {
+    path: '/:pathMatch(.*)',
+    name: 'notfound',
+    component: NotFound,
   }
 ];
 
@@ -60,7 +66,6 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  console.log(to);
   if (to.meta.requiresAuth && !store.state.user.token) {
     next({name: 'login'})
   } else if (to.meta.requiresGuest && store.state.user.token) {
